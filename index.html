@@ -2,13 +2,52 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Morphia – Chapitre 1 : La Pyramide</title> <!-- ✅ Titre modifié ici -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morphia - Chapitre 1 La Pyramide</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/turn.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 1.5em;
+    }
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 0 15px;
+    }
+    .left {
+      left: 0;
+    }
+    .right {
+      right: 0;
+    }
+    #flipbook {
+      margin: 0 auto;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
-  <h1>Morphia – Chapitre 1 : La Pyramide</h1> <!-- ✅ Titre affiché modifié ici -->
+  <h1>Morphia - Chapitre 1 La Pyramide</h1>
 
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
@@ -19,15 +58,27 @@
     const totalPages = 23;
     for (let i = 1; i <= totalPages; i++) {
       const num = String(i).padStart(3, '0');
-      $('#flipbook').append(`<div><img src="pages/page_${num}.jpg" alt="page ${i}" /></div>`);
+      $('#flipbook').append(`<div><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`);
     }
 
+    const isMobile = window.innerWidth < 768;
+
+    $('#flipbook').turn({
+      width: isMobile ? 400 : 1000,
+      height: isMobile ? 600 : 700,
+      autoCenter: true,
+      display: isMobile ? 'single' : 'double',
+      elevation: 50,
+      gradients: true,
+      acceleration: true
+    });
+
     const resizeFlipbook = () => {
-      const maxWidth = window.innerWidth * 0.9;
+      const maxWidth = window.innerWidth * 0.95;
       const maxHeight = window.innerHeight * 0.85;
 
-      const pageRatio = 3827 / 5740; // largeur / hauteur d’une page
-      const spreadRatio = (2 * 3827) / 5740; // double page
+      const pageRatio = 3827 / 5740;
+      const spreadRatio = isMobile ? pageRatio : (2 * 3827) / 5740;
 
       let width = maxWidth;
       let height = maxWidth / spreadRatio;
@@ -37,18 +88,14 @@
         width = height * spreadRatio;
       }
 
+      // Valeurs minimales pour lisibilité sur mobile
+      const minWidth = 320;
+      const minHeight = 240;
+      width = Math.max(width, minWidth);
+      height = Math.max(height, minHeight);
+
       $('#flipbook').turn('size', width, height);
     };
-
-    $('#flipbook').turn({
-      width: 1000,
-      height: 700,
-      autoCenter: true,
-      display: 'double',
-      elevation: 50,
-      gradients: true,
-      acceleration: true
-    });
 
     resizeFlipbook();
     window.addEventListener("resize", resizeFlipbook);
@@ -63,5 +110,6 @@
   </script>
 </body>
 </html>
+
 
 
