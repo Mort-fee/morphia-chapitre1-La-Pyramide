@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morphia - Chapitre 1 La Pyramide</title>
 
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Turn.js -->
   <script src="js/turn.min.js"></script>
 
   <style>
@@ -42,6 +40,7 @@
       display: block;
     }
 
+    /* BOUTONS latéraux pour PC */
     .nav-button {
       position: fixed;
       top: 50%;
@@ -52,22 +51,47 @@
       color: white;
       z-index: 100;
       cursor: pointer;
+      display: none; /* cachés sur mobile */
     }
 
     #prev-btn { left: 10px; }
     #next-btn { right: 10px; }
 
-    @media (max-width: 768px) {
-      #flipbook {
-        width: 95vw;
-        height: 85vh;
-      }
+    /* BOUTONS bas pour mobile */
+    .mobile-nav {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .mobile-nav button {
+      font-size: 1.5rem;
+      margin: 0 20px;
+      padding: 5px 10px;
+      background: black;
+      border: 1px solid white;
+      color: white;
+      cursor: pointer;
     }
 
     @media (min-width: 769px) {
       #flipbook {
         width: 1000px;
         height: 700px;
+      }
+
+      .nav-button {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #flipbook {
+        width: 95vw;
+        height: 85vh;
+      }
+
+      .mobile-nav {
+        display: block;
       }
     }
   </style>
@@ -76,12 +100,18 @@
 
   <h1>Morphia - Chapitre 1 La Pyramide</h1>
 
-  <!-- Navigation -->
+  <!-- Boutons latéraux (PC) -->
   <button class="nav-button" id="prev-btn">&#9664;</button>
   <button class="nav-button" id="next-btn">&#9654;</button>
 
   <!-- Flipbook -->
   <div id="flipbook"></div>
+
+  <!-- Boutons bas (Mobile) -->
+  <div class="mobile-nav">
+    <button id="mobile-prev">◀ Page précédente</button>
+    <button id="mobile-next">Page suivante ▶</button>
+  </div>
 
   <script>
     $(document).ready(function () {
@@ -105,16 +135,15 @@
         gradients: true
       });
 
-      // Boutons navigation
-      $('#prev-btn').click(() => {
-        $('#flipbook').turn('previous');
-      });
+      // Navigation par bouton (PC)
+      $('#prev-btn').click(() => $('#flipbook').turn('previous'));
+      $('#next-btn').click(() => $('#flipbook').turn('next'));
 
-      $('#next-btn').click(() => {
-        $('#flipbook').turn('next');
-      });
+      // Navigation boutons mobiles
+      $('#mobile-prev').click(() => $('#flipbook').turn('previous'));
+      $('#mobile-next').click(() => $('#flipbook').turn('next'));
 
-      // Swipe tactile pour Android/iOS
+      // Swipe tactile
       let startX = 0;
 
       $('#flipbook').on('touchstart', function (e) {
@@ -134,11 +163,11 @@
         }
       });
 
-      // Resize adaptation
+      // Resize
       $(window).on('resize', () => {
-        const width = isMobile ? window.innerWidth * 0.95 : 1000;
-        const height = isMobile ? window.innerHeight * 0.85 : 700;
-        $('#flipbook').turn('size', width, height);
+        const w = window.innerWidth < 768 ? window.innerWidth * 0.95 : 1000;
+        const h = window.innerWidth < 768 ? window.innerHeight * 0.85 : 700;
+        $('#flipbook').turn('size', w, h);
       });
     });
   </script>
