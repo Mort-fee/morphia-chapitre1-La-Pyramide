@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Morphia – Chapitre 1 : La Pyramide</title> <!-- ✅ Titre modifié ici -->
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/turn.min.js"></script>
+</head>
+<body>
+  <h1>Morphia – Chapitre 1 : La Pyramide</h1> <!-- ✅ Titre affiché modifié ici -->
+
+  <div class="nav-button left" id="prevBtn">&#9664;</div>
+  <div class="nav-button right" id="nextBtn">&#9654;</div>
+
+  <div id="flipbook"></div>
+
+  <script>
+    const totalPages = 23;
+    for (let i = 1; i <= totalPages; i++) {
+      const num = String(i).padStart(3, '0');
+      $('#flipbook').append(`<div><img src="pages/page_${num}.jpg" alt="page ${i}" /></div>`);
+    }
+
+    const resizeFlipbook = () => {
+      const maxWidth = window.innerWidth * 0.9;
+      const maxHeight = window.innerHeight * 0.85;
+
+      const pageRatio = 3827 / 5740; // largeur / hauteur d’une page
+      const spreadRatio = (2 * 3827) / 5740; // double page
+
+      let width = maxWidth;
+      let height = maxWidth / spreadRatio;
+
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * spreadRatio;
+      }
+
+      $('#flipbook').turn('size', width, height);
+    };
+
+    $('#flipbook').turn({
+      width: 1000,
+      height: 700,
+      autoCenter: true,
+      display: 'double',
+      elevation: 50,
+      gradients: true,
+      acceleration: true
+    });
+
+    resizeFlipbook();
+    window.addEventListener("resize", resizeFlipbook);
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      $('#flipbook').turn('previous');
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      $('#flipbook').turn('next');
+    });
+  </script>
+</body>
+</html>
+
+
