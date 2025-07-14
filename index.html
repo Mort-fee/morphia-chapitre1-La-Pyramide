@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morphia - Chapitre 1 La Pyramide</title>
+
   <link rel="stylesheet" href="css/style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/turn.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -14,11 +16,14 @@
       color: #fff;
       font-family: sans-serif;
       text-align: center;
+      overflow: hidden;
     }
+
     h1 {
-      margin-top: 10px;
+      margin: 10px 0;
       font-size: 1.5em;
     }
+
     .nav-button {
       position: absolute;
       top: 50%;
@@ -30,19 +35,27 @@
       user-select: none;
       padding: 0 15px;
     }
-    .left {
-      left: 0;
-    }
-    .right {
-      right: 0;
-    }
+
+    .left { left: 0; }
+    .right { right: 0; }
+
     #flipbook {
       margin: 0 auto;
     }
-    img {
+
+    #flipbook .page {
+      background: black;
+    }
+
+    #flipbook img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.2em; }
     }
   </style>
 </head>
@@ -56,30 +69,30 @@
 
   <script>
     const totalPages = 23;
-    for (let i = 1; i <= totalPages; i++) {
-      const num = String(i).padStart(3, '0');
-      $('#flipbook').append(`<div><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`);
-    }
-
     const isMobile = window.innerWidth < 768;
 
+    for (let i = 1; i <= totalPages; i++) {
+      const num = String(i).padStart(3, '0');
+      $('#flipbook').append(
+        `<div class="page"><img src="images/page_${num}.jpg" alt="Page ${i}" /></div>`
+      );
+    }
+
     $('#flipbook').turn({
-      width: isMobile ? 400 : 1000,
-      height: isMobile ? 600 : 700,
-      autoCenter: true,
+      width: isMobile ? window.innerWidth * 0.95 : 1000,
+      height: isMobile ? window.innerHeight * 0.85 : 700,
       display: isMobile ? 'single' : 'double',
+      autoCenter: true,
       elevation: 50,
       gradients: true,
       acceleration: true
     });
 
     const resizeFlipbook = () => {
-      const maxWidth = window.innerWidth * 0.95;
-      const maxHeight = window.innerHeight * 0.85;
-
       const pageRatio = 3827 / 5740;
       const spreadRatio = isMobile ? pageRatio : (2 * 3827) / 5740;
-
+      let maxWidth = window.innerWidth * 0.95;
+      let maxHeight = window.innerHeight * 0.85;
       let width = maxWidth;
       let height = maxWidth / spreadRatio;
 
@@ -88,28 +101,18 @@
         width = height * spreadRatio;
       }
 
-      // Valeurs minimales pour lisibilité sur mobile
-      const minWidth = 320;
-      const minHeight = 240;
-      width = Math.max(width, minWidth);
-      height = Math.max(height, minHeight);
-
       $('#flipbook').turn('size', width, height);
     };
 
     resizeFlipbook();
-    window.addEventListener("resize", resizeFlipbook);
+    window.addEventListener('resize', resizeFlipbook);
 
-    document.getElementById("prevBtn").addEventListener("click", () => {
+    document.getElementById('prevBtn').addEventListener('click', () => {
       $('#flipbook').turn('previous');
     });
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
+    document.getElementById('nextBtn').addEventListener('click', () => {
       $('#flipbook').turn('next');
     });
   </script>
 </body>
 </html>
-
-
-
