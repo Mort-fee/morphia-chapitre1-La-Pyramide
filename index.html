@@ -54,6 +54,11 @@
       object-fit: contain;
       display: block;
     }
+    
+.mobile-nav {
+  position: relative;   /* reste dans le flux normal */
+  margin-top: 20px;     /* espace après les pages */
+}
 
     @media (max-width: 768px) {
       h1 { font-size: 1.2em; }
@@ -73,7 +78,7 @@
 <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
 
 <!-- Boutons Mobile supplémentaires -->
-<div class="mobile-nav" style="margin-top:5px;">
+<div class="mobile-nav">
 </div>
 
   <script>
