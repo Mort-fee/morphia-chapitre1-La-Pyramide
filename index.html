@@ -11,253 +11,97 @@
 
   <style>
     body {
-  margin: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: sans-serif;
-  text-align: center;
-  overflow: hidden;
-}
-
-h1 {
-  margin: 10px 0;
-  font-size: 1.5em;
-}
-
-.nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  font-size: 2em;
-  color: white;
-  cursor: pointer;
-  user-select: none;
-  padding: 0 15px;
-}
-
-.left { left: 0; }
-.right { right: 0; }
-
-#flipbook {
-  margin: 0 auto;
-}
-
-#flipbook .page {
-  background: black;
-}
-
-#flipbook img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* ✅ Boutons sous le flipbook sur mobile */
-.mobile-nav {
-  display: none;            /* caché par défaut */
-  position: relative;       /* reste dans le flux */
-  margin-top: 15px;         /* espace sous le flipbook */
-  padding-bottom: 15px;     /* espace avant le footer */
-  text-align: center;       /* centrer les boutons */
-}
-
-.mobile-nav button {
-  font-size: 1rem;
-  margin: 0 8px;
-  padding: 8px 12px;
-  background: #111;
-  border: 1px solid #fff;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-  h1 { font-size: 1.2em; }
-  .mobile-nav { display: block; } /* ✅ visible sur mobile */
-}
-
-  </style>
-</head>
-<body>
-  <h1>Morphia - Chapitre 1 La Pyramide</h1>
-
-  <div class="nav-button left" id="prevBtn">&#9664;</div>
-  <div class="nav-button right" id="nextBtn">&#9654;</div>
-<!-- Bouton Retour au début sur PC (caché par défaut) -->
-<div class="nav-button right" id="restartBtn" style="display:none;">↺ Retour au début</div>
-
-<!-- Bouton Partager sur PC -->
-<div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
-
-<div id="flipbook"></div>
-
-<!-- CONTENEUR sous le flipbook -->
-<div class="mobile-nav">
-  <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
-  <button id="mobile-share"> Partager</button>
-</div>
-
-  <script>
-
-    const totalPages = 23;
-    const isMobile = window.innerWidth < 768;
-
-    // Charger toutes les pages
-    for (let i = 1; i <= totalPages; i++) {
-      const num = String(i).padStart(3, '0');
-      $('#flipbook').append(
-        `<div class="page"><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`
-      );
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      overflow: hidden;
     }
 
-    // Initialiser turn.js
-    $('#flipbook').turn({
-      width: isMobile ? window.innerWidth * 0.95 : 1000,
-      height: isMobile ? window.innerHeight * 0.85 : 700,
-      display: isMobile ? 'single' : 'double',
-      autoCenter: true,
-      elevation: 50,
-      gradients: true,
-      acceleration: true
-    });
+    h1 {
+      margin: 10px 0;
+      font-size: 1.5em;
+    }
 
-    // Supprimer la pliure / marge centrale
-    $('#flipbook .page-wrapper').css({
-      margin: '0',
-      padding: '0',
-      border: 'none'
-    });
-    $('#flipbook .shadow').css('box-shadow', 'none');
+    /* Boutons PC flottants */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      padding: 0 15px;
+    }
 
-    // Centrer la première page seule puis repasser en double après
-    $('#flipbook').bind('turned', function(event, page) {
-      if (page === 1) {
-        $('#flipbook').turn('display', 'single'); // page 1 centrée
-      } else {
-        $('#flipbook').turn('display', isMobile ? 'single' : 'double'); // double sur PC, single sur mobile
-      }
-    });
+    .left { left: 0; }
+    .right { right: 0; }
 
-// Gérer l’apparition du bouton Retour au début (PC + mobile)
-$('#flipbook').bind('turned', function(event, page) {
-  if (page === totalPages) {
-    // Sur PC
-    document.getElementById('nextBtn').style.display = 'none';
-    document.getElementById('restartBtn').style.display = 'block';
-    // Sur Mobile
-    document.getElementById('mobile-restart').style.display = 'inline-block';
-  } else {
-    // Remettre normal
-    document.getElementById('nextBtn').style.display = 'block';
-    document.getElementById('restartBtn').style.display = 'none';
-    document.getElementById('mobile-restart').style.display = 'none';
-  }
-});
+    /* Flipbook */
+    #flipbook {
+      margin: 0 auto;
+    }
 
-    // Fonction pour resize le flipbook correctement
-    const resizeFlipbook = () => {
-      const pageRatio = 3827 / 5740; // ratio des images
-      const spreadRatio = isMobile ? pageRatio : (2 * 3827) / 5740;
-      let maxWidth = window.innerWidth * 0.95;
-      let maxHeight = window.innerHeight * 0.85;
-      let width = maxWidth;
-      let height = maxWidth / spreadRatio;
+    #flipbook .page {
+      background: black;
+    }
 
-      if (height > maxHeight) {
-        height = maxHeight;
-        width = height * spreadRatio;
-      }
+    #flipbook img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
 
-      $('#flipbook').turn('size', width, height);
-    };
+    /* ✅ Boutons sous le flipbook sur mobile */
+    .mobile-nav {
+      display: none;            /* caché par défaut */
+      position: relative;       /* reste dans le flux */
+      margin-top: 15px;         /* espace sous le flipbook */
+      padding-bottom: 15px;     /* espace avant le footer */
+      text-align: center;       /* centrer les boutons */
+    }
 
-    resizeFlipbook();
-    window.addEventListener('resize', resizeFlipbook);
-
-    // Boutons précédent / suivant
-    document.getElementById('prevBtn').addEventListener('click', () => {
-      $('#flipbook').turn('previous');
-    });
-    document.getElementById('nextBtn').addEventListener('click', () => {
-      $('#flipbook').turn('next');
-    });
-
-// Action bouton Retour au début
-document.getElementById('restartBtn').addEventListener('click', () => {
-  $('#flipbook').turn('page', 1);
-});
-document.getElementById('mobile-restart').addEventListener('click', () => {
-  $('#flipbook').turn('page', 1);
-});
-// Fonction Partager
-function shareMorphia() {
-  const url = window.location.href;
-  const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
-  const text = "Je te recommande cette BD incroyable !";
-
-  if (navigator.share) {
-    // Sur mobile → partage natif
-    navigator.share({ title, text, url });
-  } else {
-    // Sur PC → copier lien
-    navigator.clipboard.writeText(url);
-    alert("Lien copié dans le presse-papiers !");
-  }
-}
-
-// Attacher aux boutons
-document.getElementById('shareBtn').addEventListener('click', shareMorphia);
-document.getElementById('mobile-share').addEventListener('click', shareMorphia);
-
-  </script>
-<footer style="position:fixed;bottom:5px;width:100%;font-size:0.8rem;color:#888;">
-  &copy; 2025 Fabien Bandel – Tous droits réservés.
-</footer>
-</body>
-</html>
-
-.mobile-nav button {
-  font-size: 1rem;
-  margin: 0 8px;
-  padding: 8px 12px;
-  background: #111;
-  border: 1px solid #fff;
-  color: #fff;
-  cursor: pointer;
-}
+    .mobile-nav button {
+      font-size: 1rem;
+      margin: 0 8px;
+      padding: 8px 12px;
+      background: #111;
+      border: 1px solid #fff;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
     @media (max-width: 768px) {
-  h1 { font-size: 1.2em; }
-  .mobile-nav { display: block; }  /* ✅ Les boutons apparaissent */
-}
-
+      h1 { font-size: 1.2em; }
+      .mobile-nav { display: block; } /* ✅ visible sur mobile */
+    }
   </style>
 </head>
 <body>
+
   <h1>Morphia - Chapitre 1 La Pyramide</h1>
 
+  <!-- Boutons PC flottants -->
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
-<!-- Bouton Retour au début sur PC (caché par défaut) -->
-<div class="nav-button right" id="restartBtn" style="display:none;">↺ Retour au début</div>
+  <div class="nav-button right" id="restartBtn" style="display:none;">↺ Retour au début</div>
+  <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn">📤 Partager</div>
 
-<!-- Bouton Partager sur PC -->
-<div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
+  <!-- Flipbook -->
+  <div id="flipbook"></div>
 
-<div id="flipbook"></div>
-
-<!-- CONTENEUR sous le flipbook -->
-<div class="mobile-nav">
-  <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
-  <button id="mobile-share"> Partager</button>
-</div>
-
+  <!-- Boutons sous le flipbook (Mobile) -->
+  <div class="mobile-nav">
+    <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
+    <button id="mobile-share">📤 Partager</button>
+  </div>
 
   <script>
-
     const totalPages = 23;
     const isMobile = window.innerWidth < 768;
 
@@ -295,27 +139,22 @@ document.getElementById('mobile-share').addEventListener('click', shareMorphia);
       } else {
         $('#flipbook').turn('display', isMobile ? 'single' : 'double'); // double sur PC, single sur mobile
       }
+
+      // ✅ Apparition du bouton retour sur la dernière page
+      if (page === totalPages) {
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('restartBtn').style.display = 'block';
+        document.getElementById('mobile-restart').style.display = 'inline-block';
+      } else {
+        document.getElementById('nextBtn').style.display = 'block';
+        document.getElementById('restartBtn').style.display = 'none';
+        document.getElementById('mobile-restart').style.display = 'none';
+      }
     });
 
-// Gérer l’apparition du bouton Retour au début (PC + mobile)
-$('#flipbook').bind('turned', function(event, page) {
-  if (page === totalPages) {
-    // Sur PC
-    document.getElementById('nextBtn').style.display = 'none';
-    document.getElementById('restartBtn').style.display = 'block';
-    // Sur Mobile
-    document.getElementById('mobile-restart').style.display = 'inline-block';
-  } else {
-    // Remettre normal
-    document.getElementById('nextBtn').style.display = 'block';
-    document.getElementById('restartBtn').style.display = 'none';
-    document.getElementById('mobile-restart').style.display = 'none';
-  }
-});
-
-    // Fonction pour resize le flipbook correctement
+    // Redimensionner le flipbook
     const resizeFlipbook = () => {
-      const pageRatio = 3827 / 5740; // ratio des images
+      const pageRatio = 3827 / 5740;
       const spreadRatio = isMobile ? pageRatio : (2 * 3827) / 5740;
       let maxWidth = window.innerWidth * 0.95;
       let maxHeight = window.innerHeight * 0.85;
@@ -333,7 +172,7 @@ $('#flipbook').bind('turned', function(event, page) {
     resizeFlipbook();
     window.addEventListener('resize', resizeFlipbook);
 
-    // Boutons précédent / suivant
+    // Navigation
     document.getElementById('prevBtn').addEventListener('click', () => {
       $('#flipbook').turn('previous');
     });
@@ -341,36 +180,35 @@ $('#flipbook').bind('turned', function(event, page) {
       $('#flipbook').turn('next');
     });
 
-// Action bouton Retour au début
-document.getElementById('restartBtn').addEventListener('click', () => {
-  $('#flipbook').turn('page', 1);
-});
-document.getElementById('mobile-restart').addEventListener('click', () => {
-  $('#flipbook').turn('page', 1);
-});
-// Fonction Partager
-function shareMorphia() {
-  const url = window.location.href;
-  const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
-  const text = "Je te recommande cette BD incroyable !";
+    // Bouton Retour au début (PC + mobile)
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      $('#flipbook').turn('page', 1);
+    });
+    document.getElementById('mobile-restart').addEventListener('click', () => {
+      $('#flipbook').turn('page', 1);
+    });
 
-  if (navigator.share) {
-    // Sur mobile → partage natif
-    navigator.share({ title, text, url });
-  } else {
-    // Sur PC → copier lien
-    navigator.clipboard.writeText(url);
-    alert("Lien copié dans le presse-papiers !");
-  }
-}
+    // Fonction Partager
+    function shareMorphia() {
+      const url = window.location.href;
+      const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
+      const text = "Je te recommande cette BD incroyable !";
 
-// Attacher aux boutons
-document.getElementById('shareBtn').addEventListener('click', shareMorphia);
-document.getElementById('mobile-share').addEventListener('click', shareMorphia);
+      if (navigator.share) {
+        navigator.share({ title, text, url });
+      } else {
+        navigator.clipboard.writeText(url);
+        alert("Lien copié dans le presse-papiers !");
+      }
+    }
 
+    // Attacher au bouton Partager
+    document.getElementById('shareBtn').addEventListener('click', shareMorphia);
+    document.getElementById('mobile-share').addEventListener('click', shareMorphia);
   </script>
-<footer style="position:fixed;bottom:5px;width:100%;font-size:0.8rem;color:#888;">
-  &copy; 2025 Fabien Bandel – Tous droits réservés.
-</footer>
+
+  <footer style="position:fixed;bottom:5px;width:100%;font-size:0.8rem;color:#888;">
+    &copy; 2025 Fabien Bandel – Tous droits réservés.
+  </footer>
 </body>
 </html>
