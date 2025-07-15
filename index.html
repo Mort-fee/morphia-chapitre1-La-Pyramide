@@ -77,17 +77,21 @@
     }
 
     @media (max-width: 768px) {
+
   h1 { font-size: 1.2em; }
 
   /* ✅ Les boutons mobiles apparaissent */
   .mobile-nav {
-  display: block;            /* caché par défaut */
+    display: block; /* affiché sur mobile */
+  }
 
   /* ❌ On cache les boutons flottants PC sur mobile */
   .nav-button {
     display: none !important;
   }
-}
+
+} /* ✅ On ferme le @media ICI et seulement ici */
+
 
   </style>
 </head>
