@@ -77,10 +77,17 @@
   border-radius: 5px;
 }
 
-@media (min-width: 768px) {
-  /* ✅ On cache les boutons mobiles uniquement sur PC */
+@media (max-width: 768px) {
   .mobile-nav {
-    display: none !important;
+    display: flex !important;
+    justify-content: center;
+    gap: 10px;
+    position: fixed;    /* toujours collé en bas */
+    bottom: 50px;       /* au-dessus du footer */
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.5); /* léger fond pour lisibilité */
+    padding: 10px 0;
   }
 }
     
