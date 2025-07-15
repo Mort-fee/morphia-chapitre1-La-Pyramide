@@ -60,10 +60,28 @@
   display: block;
   margin-top: 15px;        /* espace entre les pages et les boutons */
 }
+.mobile-nav {
+  display: none;           /* Caché par défaut */
+  position: relative;      /* suit le flux normal */
+  margin-top: 15px;        /* espace sous le flipbook */
+  padding-bottom: 15px;    /* petit espace avant le footer */
+}
+
+.mobile-nav button {
+  font-size: 1rem;
+  margin: 0 8px;
+  padding: 8px 12px;
+  background: #111;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+}
 
     @media (max-width: 768px) {
-      h1 { font-size: 1.2em; }
-    }
+  h1 { font-size: 1.2em; }
+  .mobile-nav { display: block; }  /* ✅ Les boutons apparaissent */
+}
+
   </style>
 </head>
 <body>
@@ -77,11 +95,14 @@
 <!-- Bouton Partager sur PC -->
 <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
 
-  <div id="flipbook"></div>
-<!-- Boutons Mobile supplémentaires -->
+<div id="flipbook"></div>
+
+<!-- CONTENEUR sous le flipbook -->
 <div class="mobile-nav">
   <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
+  <button id="mobile-share"> Partager</button>
 </div>
+
 
   <script>
 
