@@ -118,7 +118,6 @@
       }
     }
     /* ✅ Forcer un fond noir derrière les pages qui tournent */
-#fli/* Force un fond noir derrière les pages qui tournent */
 #flipbook {
   background: #000 !important;   /* fond noir fixe */
   position: relative;
@@ -130,19 +129,11 @@
 
 #flipbook .hard,
 #flipbook .region,
-#flipbook .shadow {
-  background: #000 !important;   /* empêche la transparence pendant l’animation */
-  box-shadow: none !important;
-}
-    /* Forcer un fond noir partout dans le flip */
-#flipbook,
-#flipbook .page,
-#flipbook .page-wrapper,
-#flipbook .region,
-#flipbook .hard,
 #flipbook .shadow,
-#flipbook .gradient {
-  background: #000 !important;
+#flipbook .gradient,
+.turn-page,
+.turn-page-wrapper {
+  background: #000 !important;   /* empêche la transparence pendant l’animation */
   box-shadow: none !important;
 }
 
