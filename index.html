@@ -57,26 +57,27 @@
     }
 
     /* ✅ Boutons sous le flipbook sur mobile */
-    .mobile-nav {
-      display: none;            /* caché par défaut */
-      position: relative;       /* reste dans le flux */
-      margin-top: 15px;         /* espace sous le flipbook */
-      padding-bottom: 15px;     /* espace avant le footer */
-      text-align: center;       /* centrer les boutons */
-    }
+.mobile-nav {
+  display: none;            /* caché par défaut */
+  position: relative;       /* reste dans le flux */
+  margin-top: 15px;         /* espace sous le flipbook */
+  padding-bottom: 15px;     /* espace avant le footer */
+  text-align: center;       /* centrer les boutons */
+}
 
-    .mobile-nav button {
-      font-size: 1rem;
-      margin: 0 8px;
-      padding: 8px 12px;
-      background: #111;
-      border: 1px solid #fff;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 5px;
-    }
+.mobile-nav button {
+  font-size: 1rem;
+  margin: 0 8px;
+  padding: 8px 12px;
+  background: #111;
+  border: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
-    @media (max-width: 768px) {
+/* ✅ Tout ce qui suit s'applique uniquement en mobile */
+@media (max-width: 768px) {
 
   h1 { font-size: 1.2em; }
 
@@ -90,8 +91,7 @@
     display: none !important;
   }
 
-} /* ✅ On ferme le @media ICI et seulement ici */
-
+} /* ✅ On ferme le @media ICI et uniquement ici */
 
   </style>
 </head>
