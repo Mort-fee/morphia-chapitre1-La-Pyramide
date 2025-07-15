@@ -117,6 +117,14 @@
         display: none !important;
       }
     }
+    /* ✅ Forcer un fond noir pendant l’animation de flip */
+#flipbook {
+  background: #000 !important;  /* fond noir permanent */
+}
+
+#flipbook .page-wrapper {
+  background: #000 !important;  /* empêche la transparence entre les pages */
+}
   </style>
 </head>
 <body>
