@@ -118,17 +118,21 @@
       }
     }
     /* ✅ Forcer un fond noir derrière les pages qui tournent */
+#fli/* Force un fond noir derrière les pages qui tournent */
 #flipbook {
-  background: #000 !important;  /* fond noir sous les pages */
+  background: #000 !important;   /* fond noir fixe */
+  position: relative;
 }
 
 #flipbook .page-wrapper {
-  background: #000 !important;  /* empêche la transparence lors du flip */
+  background: #000 !important;   /* enlève la transparence */
 }
 
+#flipbook .hard,
 #flipbook .region,
 #flipbook .shadow {
-  background: #000 !important;  /* même fond noir pour les ombres */
+  background: #000 !important;   /* empêche la transparence pendant l’animation */
+  box-shadow: none !important;
 }
   </style>
 </head>
@@ -170,16 +174,19 @@
   display: isMobile ? 'single' : 'double',
   autoCenter: true,
   elevation: 50,
-  gradients: true,   // ✅ garde les ombres
+  gradients: true,
   acceleration: true,
   when: {
     turning: function(event, page, view) {
-      // ✅ force l’ombre de fond
-      $('.shadow').css('background', 'rgba(0,0,0,0.1)');
+      $('#flipbook').css('background', '#000');   // ✅ force noir pendant le flip
+      $('.shadow').css({
+        'background': '#000',
+        'opacity': '1'
+      });
     }
   }
 });
-
+    
     // ✅ Supprimer la pliure / marge centrale
     $('#flipbook .page-wrapper').css({ margin: '0', padding: '0', border: 'none' });
     $('#flipbook .shadow').css('box-shadow', 'none');
