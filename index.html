@@ -113,7 +113,12 @@
   <script>
     const totalPages = 23;
     const isMobile = window.innerWidth < 768;
-
+    
+// ✅ Forcer l'affichage des boutons mobiles si on est sur mobile
+if (isMobile) {
+  document.querySelector('.mobile-nav').style.display = 'block';
+}
+    
     // Charger toutes les pages
     for (let i = 1; i <= totalPages; i++) {
       const num = String(i).padStart(3, '0');
