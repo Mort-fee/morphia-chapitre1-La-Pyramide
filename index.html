@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morphia - Chapitre 1 : La Pyramide</title>
 
-  <link rel="stylesheet" href="css/style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/turn.min.js"></script>
 
@@ -17,7 +16,6 @@
       font-family: sans-serif;
       text-align: center;
       overflow: hidden;
-      overflow-y: auto; 
     }
 
     h1 {
@@ -25,7 +23,7 @@
       font-size: 1.5em;
     }
 
-    /* Boutons PC flottants */
+    /* ✅ Boutons flottants PC */
     .nav-button {
       position: absolute;
       top: 50%;
@@ -40,6 +38,19 @@
 
     .left { left: 0; }
     .right { right: 0; }
+
+    /* Bouton Partager PC en bas à droite */
+    #shareBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      background: #111;
+      border: 1px solid #fff;
+      border-radius: 5px;
+    }
 
     /* Flipbook */
     #flipbook {
@@ -57,77 +68,77 @@
       display: block;
     }
 
-    /* ✅ Boutons sous le flipbook sur mobile */
-.mobile-nav {
-  display: block;            /* caché par défaut */
-  position: relative;       /* reste dans le flux */
-  margin-top: 15px;         /* espace sous le flipbook */
-  padding-bottom: 15px;     /* espace avant le footer */
-  text-align: center;       /* centrer les boutons */
-}
+    /* ✅ Boutons sous le flipbook (Mobile) */
+    .mobile-nav {
+      display: none;            /* caché par défaut */
+      position: relative;       /* reste dans le flux */
+      margin-top: 15px;         /* espace sous le flipbook */
+      padding-bottom: 15px;     /* espace avant le footer */
+      text-align: center;       /* centrer les boutons */
+    }
 
-.mobile-nav button {
-  font-size: 1rem;
-  margin: 0 8px;
-  padding: 8px 12px;
-  background: #111;
-  border: 1px solid #fff;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-}
+    .mobile-nav button {
+      font-size: 1rem;
+      margin: 0 8px;
+      padding: 8px 12px;
+      background: #111;
+      border: 1px solid #fff;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-@media (max-width: 768px) {
-  .mobile-nav {
-    display: flex !important;
-    justify-content: center;
-    gap: 10px;
-    position: fixed;    /* toujours collé en bas */
-    bottom: 50px;       /* au-dessus du footer */
-    left: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.5); /* léger fond pour lisibilité */
-    padding: 10px 0;
-  }
-}
-    
-@media (min-width: 769px) {
-  .nav-button {
-    display: none !important; /* cache les flottants sur mobile */
-  }
-}
+    /* ✅ MOBILE (<768px) */
+    @media (max-width: 768px) {
+      h1 { font-size: 1.2em; }
 
+      /* On affiche les boutons mobiles sous le flipbook */
+      .mobile-nav {
+        display: flex !important;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      /* ❌ On cache les boutons flottants PC sur mobile */
+      .nav-button,
+      #shareBtn {
+        display: none !important;
+      }
+    }
+
+    /* ✅ PC (>769px) */
+    @media (min-width: 769px) {
+      /* Sur PC, les boutons mobiles n'apparaissent pas */
+      .mobile-nav {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
 
   <h1>Morphia - Chapitre 1 : La Pyramide</h1>
 
-  <!-- Boutons PC flottants -->
+  <!-- ✅ Boutons PC flottants -->
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
-  <div class="nav-button right" id="restartBtn" style="display:none;">↺ Retour au début</div>
-  <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
+  <div id="shareBtn">📤 Partager</div>
 
-  <!-- Flipbook -->
+  <!-- ✅ Flipbook -->
   <div id="flipbook"></div>
 
-  <!-- Boutons sous le flipbook (Mobile) -->
+  <!-- ✅ Boutons sous le flipbook (Mobile) -->
   <div class="mobile-nav">
-    <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
-    <button id="mobile-share"> Partager</button>
+    <button id="mobile-prev">◀ Précédent</button>
+    <button id="mobile-next">Suivant ▶</button>
+    <button id="mobile-share">📤 Partager</button>
   </div>
 
   <script>
     const totalPages = 23;
     const isMobile = window.innerWidth < 768;
-    
-// ✅ Forcer l'affichage des boutons mobiles si on est sur mobile
-if (isMobile) {
-  document.querySelector('.mobile-nav').style.display = 'block';
-}
-    
-    // Charger toutes les pages
+
+    // ✅ Charger toutes les pages automatiquement
     for (let i = 1; i <= totalPages; i++) {
       const num = String(i).padStart(3, '0');
       $('#flipbook').append(
@@ -135,7 +146,7 @@ if (isMobile) {
       );
     }
 
-    // Initialiser turn.js
+    // ✅ Initialiser turn.js
     $('#flipbook').turn({
       width: isMobile ? window.innerWidth * 0.95 : 1000,
       height: isMobile ? window.innerHeight * 0.85 : 700,
@@ -146,35 +157,11 @@ if (isMobile) {
       acceleration: true
     });
 
-    // Supprimer la pliure / marge centrale
-    $('#flipbook .page-wrapper').css({
-      margin: '0',
-      padding: '0',
-      border: 'none'
-    });
+    // ✅ Supprimer la pliure / marge centrale
+    $('#flipbook .page-wrapper').css({ margin: '0', padding: '0', border: 'none' });
     $('#flipbook .shadow').css('box-shadow', 'none');
 
-    // Centrer la première page seule puis repasser en double après
-    $('#flipbook').bind('turned', function(event, page) {
-      if (page === 1) {
-        $('#flipbook').turn('display', 'single'); // page 1 centrée
-      } else {
-        $('#flipbook').turn('display', isMobile ? 'single' : 'double'); // double sur PC, single sur mobile
-      }
-
-      // ✅ Apparition du bouton retour sur la dernière page
-      if (page === totalPages) {
-        document.getElementById('nextBtn').style.display = 'none';
-        document.getElementById('restartBtn').style.display = 'block';
-        document.getElementById('mobile-restart').style.display = 'inline-block';
-      } else {
-        document.getElementById('nextBtn').style.display = 'block';
-        document.getElementById('restartBtn').style.display = 'none';
-        document.getElementById('mobile-restart').style.display = 'none';
-      }
-    });
-
-    // Redimensionner le flipbook
+    // ✅ Resize auto
     const resizeFlipbook = () => {
       const pageRatio = 3827 / 5740;
       const spreadRatio = isMobile ? pageRatio : (2 * 3827) / 5740;
@@ -187,14 +174,12 @@ if (isMobile) {
         height = maxHeight;
         width = height * spreadRatio;
       }
-
       $('#flipbook').turn('size', width, height);
     };
-
     resizeFlipbook();
     window.addEventListener('resize', resizeFlipbook);
 
-    // Navigation
+    // ✅ Navigation PC
     document.getElementById('prevBtn').addEventListener('click', () => {
       $('#flipbook').turn('previous');
     });
@@ -202,15 +187,15 @@ if (isMobile) {
       $('#flipbook').turn('next');
     });
 
-    // Bouton Retour au début (PC + mobile)
-    document.getElementById('restartBtn').addEventListener('click', () => {
-      $('#flipbook').turn('page', 1);
+    // ✅ Navigation Mobile
+    document.getElementById('mobile-prev').addEventListener('click', () => {
+      $('#flipbook').turn('previous');
     });
-    document.getElementById('mobile-restart').addEventListener('click', () => {
-      $('#flipbook').turn('page', 1);
+    document.getElementById('mobile-next').addEventListener('click', () => {
+      $('#flipbook').turn('next');
     });
 
-    // Fonction Partager
+    // ✅ Fonction Partager
     function shareMorphia() {
       const url = window.location.href;
       const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
@@ -224,7 +209,7 @@ if (isMobile) {
       }
     }
 
-    // Attacher au bouton Partager
+    // ✅ Bouton Partager PC + Mobile
     document.getElementById('shareBtn').addEventListener('click', shareMorphia);
     document.getElementById('mobile-share').addEventListener('click', shareMorphia);
   </script>
