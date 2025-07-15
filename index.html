@@ -11,112 +11,56 @@
 
   <style>
     body {
-      margin: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
 
-    h1 {
-      margin: 10px 0;
-      font-size: 1.5em;
-    }
+h1 {
+  margin: 10px 0;
+  font-size: 1.5em;
+}
 
-    .nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-      font-size: 2em;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      padding: 0 15px;
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-size: 2em;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 15px;
+}
 
-    }
+.left { left: 0; }
+.right { right: 0; }
 
-    .left { left: 0; }
-    .right { right: 0; }
+#flipbook {
+  margin: 0 auto;
+}
 
-    #flipbook {
-      margin: 0 auto;
-    }
+#flipbook .page {
+  background: black;
+}
 
-    #flipbook .page {
-      background: black;
-    }
+#flipbook img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
-    #flipbook img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Morphia - Chapitre 1 La Pyramide</title>
-
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="js/turn.min.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    h1 {
-      margin: 10px 0;
-      font-size: 1.5em;
-    }
-
-    .nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-      font-size: 2em;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      padding: 0 15px;
-
-    }
-
-    .left { left: 0; }
-    .right { right: 0; }
-
-    #flipbook {
-      margin: 0 auto;
-    }
-
-    #flipbook .page {
-      background: black;
-    }
-
-    #flipbook img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
+/* ✅ Boutons sous le flipbook sur mobile */
 .mobile-nav {
-  display: none;           /* Caché par défaut */
-  position: relative;      /* suit le flux normal */
-  margin-top: 15px;        /* espace sous le flipbook */
-  padding-bottom: 15px;    /* petit espace avant le footer */
+  display: none;            /* caché par défaut */
+  position: relative;       /* reste dans le flux */
+  margin-top: 15px;         /* espace sous le flipbook */
+  padding-bottom: 15px;     /* espace avant le footer */
+  text-align: center;       /* centrer les boutons */
 }
 
 .mobile-nav button {
@@ -127,11 +71,12 @@
   border: 1px solid #fff;
   color: #fff;
   cursor: pointer;
+  border-radius: 5px;
 }
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   h1 { font-size: 1.2em; }
-  .mobile-nav { display: block; }  /* ✅ Les boutons apparaissent */
+  .mobile-nav { display: block; } /* ✅ visible sur mobile */
 }
 
   </style>
@@ -154,7 +99,6 @@
   <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
   <button id="mobile-share"> Partager</button>
 </div>
-
 
   <script>
 
