@@ -116,6 +116,22 @@
       background: rgba(0,0,0,0.6) !important; /* ombre douce semi-transparente */
       box-shadow: none !important;
     }
+    /* ✅ Rend le dos des pages noir pendant le flip */
+#flipbook .page {
+  background: #000 !important; /* face avant noire (par défaut) */
+}
+
+#flipbook .page .turn-back,
+#flipbook .page .turn-front {
+  background: #000 !important; /* verso noir */
+}
+
+/* Optionnel : supprime tout dégradé Turn.js */
+#flipbook .gradient,
+#flipbook .shadow {
+  background: none !important;
+  box-shadow: none !important;
+}
   </style>
 </head>
 <body>
