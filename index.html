@@ -152,16 +152,15 @@
       );
     }
 
-    // ✅ Initialiser turn.js
     $('#flipbook').turn({
-      width: isMobile ? window.innerWidth * 0.95 : 1000,
-      height: isMobile ? window.innerHeight * 0.85 : 700,
-      display: isMobile ? 'single' : 'double',
-      autoCenter: true,
-      elevation: 100,
-      gradients: true,
-      duration: 1000
-      when: {
+  width: isMobile ? window.innerWidth * 0.95 : 1000,
+  height: isMobile ? window.innerHeight * 0.85 : 700,
+  display: isMobile ? 'single' : 'double',
+  autoCenter: true,
+  elevation: 50,
+  gradients: true,   // ✅ garde les ombres
+  acceleration: true,
+  when: {
     turning: function(event, page, view) {
       // ✅ force l’ombre de fond
       $('.shadow').css('background', 'rgba(0,0,0,0.8)');
