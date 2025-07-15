@@ -56,29 +56,31 @@
     }
     
 .mobile-nav {
-  position: relative;   /* reste dans le flux normal */
-  margin-top: 20px;     /* espace après les pages */
+  position: relative;      /* reste dans le flux normal */
+  display: block;
+  margin-top: 15px;        /* espace entre les pages et les boutons */
 }
 
     @media (max-width: 768px) {
       h1 { font-size: 1.2em; }
     }
-
   </style>
 </head>
 <body>
   <h1>Morphia - Chapitre 1 La Pyramide</h1>
-  
+
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
+<!-- Bouton Retour au début sur PC (caché par défaut) -->
+<div class="nav-button right" id="restartBtn" style="display:none;">↺ Retour au début</div>
 
 <!-- Bouton Partager sur PC -->
 <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
 
-<div id="flipbook"></div>
-  
+  <div id="flipbook"></div>
 <!-- Boutons Mobile supplémentaires -->
 <div class="mobile-nav">
+  <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
 </div>
 
   <script>
@@ -90,7 +92,7 @@
     for (let i = 1; i <= totalPages; i++) {
       const num = String(i).padStart(3, '0');
       $('#flipbook').append(
-        `<div class="page"><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`
+        `<div class="page"><img src="images/page_${num}.jpg" alt="Page ${i}" /></div>`
       );
     }
 
