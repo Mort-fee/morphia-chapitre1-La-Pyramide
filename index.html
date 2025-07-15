@@ -134,6 +134,23 @@
   background: #000 !important;   /* empêche la transparence pendant l’animation */
   box-shadow: none !important;
 }
+    /* Forcer un fond noir partout dans le flip */
+#flipbook,
+#flipbook .page,
+#flipbook .page-wrapper,
+#flipbook .region,
+#flipbook .hard,
+#flipbook .shadow,
+#flipbook .gradient {
+  background: #000 !important;
+  box-shadow: none !important;
+}
+
+/* Désactiver la transparence Turn.js pendant les flips */
+.turn-page,
+.turn-page-wrapper {
+  background: #000 !important;
+}
   </style>
 </head>
 <body>
@@ -177,14 +194,18 @@
   gradients: true,
   acceleration: true,
   when: {
-    turning: function(event, page, view) {
-      $('#flipbook').css('background', '#000');   // ✅ force noir pendant le flip
-      $('.shadow').css({
-        'background': '#000',
-        'opacity': '1'
-      });
-    }
+  turning: function(event, page, view) {
+    // Pendant l’animation, on force tout en noir
+    $('#flipbook, .shadow, .gradient').css({
+      'background': '#000',
+      'opacity': '1'
+    });
+  },
+  turned: function(event, page, view) {
+    // Après le flip, on s’assure que ça reste noir
+    $('#flipbook, .shadow, .gradient').css('background', '#000');
   }
+}
 });
     
     // ✅ Supprimer la pliure / marge centrale
