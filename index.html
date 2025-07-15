@@ -55,10 +55,12 @@
     /* Flipbook */
     #flipbook {
       margin: 0 auto;
+      background: #000 !important; /* fond noir général */
+      position: relative;
     }
 
     #flipbook .page {
-      background: black;
+      background: #000 !important; /* fond noir des pages */
     }
 
     #flipbook img {
@@ -67,43 +69,34 @@
       object-fit: contain;
       display: block;
     }
-    
-/* ✅ Force un fond noir derrière les pages pendant l’animation de flip */
-#flipbook .page {
-  background-color: #000 !important;
-}
 
     /* ✅ Boutons sous le flipbook (Mobile) */
     .mobile-nav {
-      display: none;            /* caché par défaut */
-      position: relative;       /* reste dans le flux */
-      margin-top: 15px;         /* espace sous le flipbook */
-      padding-bottom: 15px;     /* espace avant le footer */
-      text-align: center;       /* centrer les boutons */
+      display: none;
+      position: relative;
+      margin-top: 15px;
+      padding-bottom: 15px;
+      text-align: center;
     }
 
     .mobile-nav button {
-  font-size: 1rem;
-  margin: 0 8px;
-  padding: 8px 12px;
-  background: none;       /* ✅ plus de fond */
-  border: none;           /* ✅ plus de cadre */
-  color: #fff;            /* ✅ texte blanc */
-  cursor: pointer;
-}
+      font-size: 1rem;
+      margin: 0 8px;
+      padding: 8px 12px;
+      background: none;  /* ✅ pas de fond */
+      border: none;      /* ✅ pas de cadre */
+      color: #fff;       /* ✅ texte blanc */
+      cursor: pointer;
+    }
 
     /* ✅ MOBILE (<768px) */
     @media (max-width: 768px) {
       h1 { font-size: 1.2em; }
-
-      /* On affiche les boutons mobiles sous le flipbook */
       .mobile-nav {
         display: flex !important;
         justify-content: center;
         gap: 10px;
       }
-
-      /* ❌ On cache les boutons flottants PC sur mobile */
       .nav-button,
       #shareBtn {
         display: none !important;
@@ -112,36 +105,17 @@
 
     /* ✅ PC (>769px) */
     @media (min-width: 769px) {
-      /* Sur PC, les boutons mobiles n'apparaissent pas */
       .mobile-nav {
         display: none !important;
       }
     }
-    /* ✅ Forcer un fond noir derrière les pages qui tournent */
-#flipbook {
-  background: #000 !important;   /* fond noir fixe */
-  position: relative;
-}
 
-#flipbook .page-wrapper {
-  background: #000 !important;   /* enlève la transparence */
-}
-
-#flipbook .hard,
-#flipbook .region,
-#flipbook .shadow,
-#flipbook .gradient,
-.turn-page,
-.turn-page-wrapper {
-  background: #000 !important;   /* empêche la transparence pendant l’animation */
-  box-shadow: none !important;
-}
-
-/* Désactiver la transparence Turn.js pendant les flips */
-.turn-page,
-.turn-page-wrapper {
-  background: #000 !important;
-}
+    /* ✅ Empêche uniquement la transparence des ombres pendant le flip */
+    #flipbook .shadow,
+    #flipbook .gradient {
+      background: rgba(0,0,0,0.6) !important; /* ombre douce semi-transparente */
+      box-shadow: none !important;
+    }
   </style>
 </head>
 <body>
@@ -151,7 +125,7 @@
   <!-- ✅ Boutons PC flottants -->
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
-  <div id="shareBtn"> Partager</div>
+  <div id="shareBtn">Partager</div>
 
   <!-- ✅ Flipbook -->
   <div id="flipbook"></div>
@@ -159,9 +133,8 @@
   <!-- ✅ Boutons sous le flipbook (Mobile) -->
   <div class="mobile-nav">
     <button id="mobile-prev">◀</button>
-    <button id="mobile-share"> Partager</button>
+    <button id="mobile-share">Partager</button>
     <button id="mobile-next">▶</button>
-    
   </div>
 
   <script>
@@ -177,28 +150,28 @@
     }
 
     $('#flipbook').turn({
-  width: isMobile ? window.innerWidth * 0.95 : 1000,
-  height: isMobile ? window.innerHeight * 0.85 : 700,
-  display: isMobile ? 'single' : 'double',
-  autoCenter: true,
-  elevation: 50,
-  gradients: true,
-  acceleration: true,
-  when: {
-  turning: function(event, page, view) {
-    // Pendant l’animation, on force tout en noir
-    $('#flipbook, .shadow, .gradient').css({
-      'background': '#000',
-      'opacity': '1'
+      width: isMobile ? window.innerWidth * 0.95 : 1000,
+      height: isMobile ? window.innerHeight * 0.85 : 700,
+      display: isMobile ? 'single' : 'double',
+      autoCenter: true,
+      elevation: 50,
+      gradients: true,
+      acceleration: true,
+      when: {
+        turning: function(event, page, view) {
+          // ✅ Pendant l’animation, on renforce seulement les ombres (pas de noir opaque)
+          $('.shadow, .gradient').css({
+            'background': 'rgba(0,0,0,0.6)',
+            'opacity': '1'
+          });
+        },
+        turned: function(event, page, view) {
+          // ✅ Après le flip, on garde juste le fond noir du conteneur
+          $('#flipbook').css('background', '#000');
+        }
+      }
     });
-  },
-  turned: function(event, page, view) {
-    // Après le flip, on s’assure que ça reste noir
-    $('#flipbook, .shadow, .gradient').css('background', '#000');
-  }
-}
-});
-    
+
     // ✅ Supprimer la pliure / marge centrale
     $('#flipbook .page-wrapper').css({ margin: '0', padding: '0', border: 'none' });
     $('#flipbook .shadow').css('box-shadow', 'none');
