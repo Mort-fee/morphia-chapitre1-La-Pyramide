@@ -58,30 +58,13 @@
     @media (max-width: 768px) {
       h1 { font-size: 1.2em; }
     }
-    .mobile-nav {
-  display: none;
-  margin-top: 15px; /* espace entre les pages et les boutons */
-}
-
-.mobile-nav button {
-  font-size: 1.2rem;
-  margin: 0 10px;
-  padding: 6px 12px;
-  background: black;
-  border: 1px solid white;
-  color: white;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .mobile-nav { display: block; }  /* visible uniquement sur mobile */
-}
-
   </style>
 </head>
 <body>
   <h1>Morphia - Chapitre 1 La Pyramide</h1>
-
+  
+<div id="flipbook"></div>
+  
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
 <!-- Bouton Retour au début sur PC (caché par défaut) -->
@@ -90,9 +73,6 @@
 <!-- Bouton Partager sur PC -->
 <div class="nav-button" style="bottom:20px;top:auto;right:20px;font-size:1.2rem;cursor:pointer;" id="shareBtn"> Partager</div>
 
-  <div id="flipbook"></div>
-  
-  <div id="flipbook"></div>
 <!-- Boutons Mobile supplémentaires -->
 <div class="mobile-nav" style="margin-top:5px;">
   <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
