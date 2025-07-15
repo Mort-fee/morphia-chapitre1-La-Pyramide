@@ -135,6 +135,14 @@
         $('#flipbook').turn('display', isMobile ? 'single' : 'double'); // double sur PC, single sur mobile
       }
     });
+<div id="flipbook"></div>
+
+<!-- Boutons Mobile SOUS les pages -->
+<div class="mobile-nav">
+  <button id="mobile-prev">◀ Précédent</button>
+  <button id="mobile-next">Suivant ▶</button>
+  <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
+</div>
 
 // Gérer l’apparition du bouton Retour au début (PC + mobile)
 $('#flipbook').bind('turned', function(event, page) {
