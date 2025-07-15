@@ -122,6 +122,11 @@
         `<div class="page"><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`
       );
     }
+    
+// ✅ Si on est sur mobile, afficher la barre de boutons sous le flipbook
+if (isMobile) {
+  document.querySelector('.mobile-nav').style.display = 'block';
+}
 
     // Initialiser turn.js
     $('#flipbook').turn({
