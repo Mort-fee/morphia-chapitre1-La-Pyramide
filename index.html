@@ -58,24 +58,6 @@
     @media (max-width: 768px) {
       h1 { font-size: 1.2em; }
     }
-    @media (max-width: 768px) {
-  .mobile-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    position: relative; /* en flux normal */
-    margin-top: 10px;  /* espace après le flipbook */
-  }
-  .mobile-nav button {
-    font-size: 1.2rem;
-    padding: 8px 15px;
-    background: black;
-    border: 1px solid white;
-    color: white;
-    cursor: pointer;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -104,7 +86,7 @@
     for (let i = 1; i <= totalPages; i++) {
       const num = String(i).padStart(3, '0');
       $('#flipbook').append(
-        `<div class="page"><img src="pages/page_${num}.jpg" alt="Page ${i}" /></div>`
+        `<div class="page"><img src="images/page_${num}.jpg" alt="Page ${i}" /></div>`
       );
     }
 
@@ -135,14 +117,6 @@
         $('#flipbook').turn('display', isMobile ? 'single' : 'double'); // double sur PC, single sur mobile
       }
     });
-<div id="flipbook"></div>
-
-<!-- Boutons Mobile SOUS les pages -->
-<div class="mobile-nav">
-  <button id="mobile-prev">◀ Précédent</button>
-  <button id="mobile-next">Suivant ▶</button>
-  <button id="mobile-restart" style="display:none;">↺ Retour au début</button>
-</div>
 
 // Gérer l’apparition du bouton Retour au début (PC + mobile)
 $('#flipbook').bind('turned', function(event, page) {
