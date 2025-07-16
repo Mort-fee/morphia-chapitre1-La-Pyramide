@@ -11,7 +11,7 @@
   <style>
     body {
       margin: 0;
-      background-color: #000;
+      background: #000;         /* ✅ fond noir général */
       color: #fff;
       font-family: sans-serif;
       text-align: center;
@@ -35,11 +35,10 @@
       user-select: none;
       padding: 0 15px;
     }
-
     .left { left: 0; }
     .right { right: 0; }
 
-    /* Bouton Partager PC en bas à droite */
+    /* ✅ Bouton partager PC */
     #shareBtn {
       position: fixed;
       bottom: 20px;
@@ -52,16 +51,14 @@
       border-radius: 5px;
     }
 
-    /* Flipbook */
+    /* ✅ Flipbook */
     #flipbook {
       margin: 0 auto;
-      background: #000; /* fond général */
-      position: relative;
+      background: #000; /* ✅ simple fond noir */
     }
 
     #flipbook .page {
-      /* juste le fond de la page, pas de !important pour laisser Turn.js gérer le dos */
-      background: #000;
+      background: #000; /* ✅ pages noires par défaut */
     }
 
     #flipbook img {
@@ -84,9 +81,9 @@
       font-size: 1rem;
       margin: 0 8px;
       padding: 8px 12px;
-      background: none;  
-      border: none;      
-      color: #fff;       
+      background: none; 
+      border: none;
+      color: #fff;
       cursor: pointer;
     }
 
@@ -110,9 +107,6 @@
         display: none !important;
       }
     }
-
-    /* ❌ On ne touche plus aux .shadow, .gradient, .turn-back */
-    /* On laisse Turn.js gérer ses ombres et le dos des pages */
   </style>
 </head>
 <body>
@@ -146,13 +140,14 @@
       );
     }
 
+    // ✅ Initialiser Turn.js sans forcer d’autres styles
     $('#flipbook').turn({
       width: isMobile ? window.innerWidth * 0.95 : 1000,
       height: isMobile ? window.innerHeight * 0.85 : 700,
       display: isMobile ? 'single' : 'double',
       autoCenter: true,
       elevation: 50,
-      gradients: true,  // ✅ on garde les ombres par défaut
+      gradients: true,    // ✅ garde les ombres et le dos sombre
       acceleration: true
     });
 
