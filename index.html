@@ -55,12 +55,12 @@
     /* Flipbook */
     #flipbook {
       margin: 0 auto;
-      background: #000; /* fond noir général */
+      background: #000 !important; /* fond noir général */
       position: relative;
     }
 
     #flipbook .page {
-      background: #000; /* fond noir des pages */
+      background: #000 !important; /* fond noir des pages */
     }
 
     #flipbook img {
@@ -109,6 +109,19 @@
         display: none !important;
       }
     }
+
+    /* ✅ Empêche uniquement la transparence des ombres pendant le flip */
+    #flipbook .shadow,
+    #flipbook .gradient {
+      background: rgba(0,0,0,0.6) !important; /* ombre douce semi-transparente */
+      box-shadow: none !important;
+    }
+
+    /* ✅ NOUVEAU : Rendre le dos des pages noir pendant le flip */
+    #flipbook .page .front,
+    #flipbook .page .back {
+      background-color: #000 !important; /* verso toujours noir */
+    }
   </style>
 </head>
 <body>
@@ -148,9 +161,13 @@
       display: isMobile ? 'single' : 'double',
       autoCenter: true,
       elevation: 50,
-      gradients: true,  // ✅ laisse Turn.js gérer ses ombres d'origine
+      gradients: true,
       acceleration: true
     });
+
+    // ✅ Supprimer la pliure / marge centrale
+    $('#flipbook .page-wrapper').css({ margin: '0', padding: '0', border: 'none' });
+    $('#flipbook .shadow').css('box-shadow', 'none');
 
     // ✅ Resize auto
     const resizeFlipbook = () => {
