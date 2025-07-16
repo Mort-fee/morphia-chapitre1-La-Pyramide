@@ -11,7 +11,7 @@
   <style>
     body {
       margin: 0;
-      background-color: #000;
+      background: #000;         /* ✅ fond noir général */
       color: #fff;
       font-family: sans-serif;
       text-align: center;
@@ -35,11 +35,10 @@
       user-select: none;
       padding: 0 15px;
     }
-
     .left { left: 0; }
     .right { right: 0; }
 
-    /* Bouton Partager PC en bas à droite */
+    /* ✅ Bouton partager PC */
     #shareBtn {
       position: fixed;
       bottom: 20px;
@@ -52,15 +51,14 @@
       border-radius: 5px;
     }
 
-    /* ✅ Flipbook conteneur */
+    /* ✅ Flipbook */
     #flipbook {
       margin: 0 auto;
-      background: #000; /* fond noir général */
-      position: relative;
+      background: #000; /* ✅ fond noir */
     }
 
     #flipbook .page {
-      background: #000; /* fond noir des pages */
+      background: #000; /* ✅ chaque page a un fond noir */
     }
 
     #flipbook img {
@@ -83,9 +81,9 @@
       font-size: 1rem;
       margin: 0 8px;
       padding: 8px 12px;
-      background: none;  /* ✅ pas de fond */
-      border: none;      /* ✅ pas de cadre */
-      color: #fff;       /* ✅ texte blanc */
+      background: none; 
+      border: none;
+      color: #fff;
       cursor: pointer;
     }
 
@@ -142,19 +140,16 @@
       );
     }
 
-    // ✅ Initialisation Turn.js
+    // ✅ Initialiser Turn.js avec l’effet flip parfait
     $('#flipbook').turn({
       width: isMobile ? window.innerWidth * 0.95 : 1000,
       height: isMobile ? window.innerHeight * 0.85 : 700,
       display: isMobile ? 'single' : 'double',
       autoCenter: true,
-      elevation: 50,
-      gradients: true,   // garde les ombres Turn.js
-      acceleration: true
+      elevation: 50,     // ✅ garde la profondeur du flip
+      gradients: true,   // ✅ active les ombres et le dos sombre
+      acceleration: true // ✅ fluidifie l’animation
     });
-
-    // ✅ Supprimer la pliure / marge centrale
-    $('#flipbook .page-wrapper').css({ margin: '0', padding: '0', border: 'none' });
 
     // ✅ Resize auto
     const resizeFlipbook = () => {
