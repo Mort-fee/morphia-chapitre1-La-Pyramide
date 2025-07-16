@@ -187,19 +187,35 @@
       $('#flipbook').turn('next');
     });
 
-    // ✅ Fonction Partager
     function shareMorphia() {
-      const url = window.location.href;
-      const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
-      const text = "Je te recommande cette BD incroyable !";
+  const url = window.location.href;
+  const title = "Découvrez Morphia – Chapitre 1 : La Pyramide";
+  const text = "Je te recommande cette BD incroyable !";
 
-      if (navigator.share) {
-        navigator.share({ title, text, url });
-      } else {
-        navigator.clipboard.writeText(url);
-        alert("Lien copié dans le presse-papiers !");
-      }
+  // ✅ SI navigateur supporte Web Share API (mobile surtout)
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: text,
+      url: url
+    })
+    .catch((error) => console.log('Partage annulé', error));
+
+  } else {
+    // ✅ Sinon, ouvrir une petite fenêtre de partage sur PC
+    const shareWindow = window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      'Partager',
+      'width=600,height=400'
+    );
+
+    if (!shareWindow) {
+      // ✅ fallback si popup bloquée : copie le lien
+      navigator.clipboard.writeText(url);
+      alert("Lien copié dans le presse-papiers !");
     }
+  }
+}
 
     // ✅ Bouton Partager PC + Mobile
     document.getElementById('shareBtn').addEventListener('click', shareMorphia);
