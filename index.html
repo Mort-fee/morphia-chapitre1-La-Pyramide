@@ -11,7 +11,7 @@
   <style>
     body {
       margin: 0;
-      background: #000;         /* ✅ fond noir général */
+      background: #000;
       color: #fff;
       font-family: sans-serif;
       text-align: center;
@@ -38,7 +38,7 @@
     .left { left: 0; }
     .right { right: 0; }
 
-    /* ✅ Bouton partager PC */
+    /* ✅ Bouton partager PC en bas à droite */
     #shareBtn {
       position: fixed;
       bottom: 20px;
@@ -51,14 +51,27 @@
       border-radius: 5px;
     }
 
+    /* ✅ Bouton retour PC en bas à gauche */
+    #restartBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      background: #111;
+      border: 1px solid #fff;
+      border-radius: 5px;
+    }
+
     /* ✅ Flipbook */
     #flipbook {
       margin: 0 auto;
-      background: #000; /* ✅ simple fond noir */
+      background: #000;
     }
 
     #flipbook .page {
-      background: #000; /* ✅ pages noires par défaut */
+      background: #000;
     }
 
     #flipbook img {
@@ -81,7 +94,7 @@
       font-size: 1rem;
       margin: 0 8px;
       padding: 8px 12px;
-      background: none; 
+      background: none;
       border: none;
       color: #fff;
       cursor: pointer;
@@ -96,7 +109,8 @@
         gap: 10px;
       }
       .nav-button,
-      #shareBtn {
+      #shareBtn,
+      #restartBtn {
         display: none !important;
       }
     }
@@ -116,6 +130,9 @@
   <!-- ✅ Boutons PC flottants -->
   <div class="nav-button left" id="prevBtn">&#9664;</div>
   <div class="nav-button right" id="nextBtn">&#9654;</div>
+
+  <!-- ✅ Boutons fixes en bas sur PC -->
+  <div id="restartBtn">↺ Début</div>
   <div id="shareBtn">Partager</div>
 
   <!-- ✅ Flipbook -->
@@ -124,6 +141,7 @@
   <!-- ✅ Boutons sous le flipbook (Mobile) -->
   <div class="mobile-nav">
     <button id="mobile-prev">◀</button>
+    <button id="mobile-restart">↺ Début</button>
     <button id="mobile-share">Partager</button>
     <button id="mobile-next">▶</button>
   </div>
@@ -140,14 +158,14 @@
       );
     }
 
-    // ✅ Initialiser Turn.js sans forcer d’autres styles
+    // ✅ Initialiser Turn.js
     $('#flipbook').turn({
       width: isMobile ? window.innerWidth * 0.95 : 1000,
       height: isMobile ? window.innerHeight * 0.85 : 700,
       display: isMobile ? 'single' : 'double',
       autoCenter: true,
       elevation: 50,
-      gradients: true,    // ✅ garde les ombres et le dos sombre
+      gradients: true,
       acceleration: true
     });
 
@@ -183,6 +201,14 @@
     });
     document.getElementById('mobile-next').addEventListener('click', () => {
       $('#flipbook').turn('next');
+    });
+
+    // ✅ Bouton "Retour au début" PC + Mobile
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      $('#flipbook').turn('page', 1);
+    });
+    document.getElementById('mobile-restart').addEventListener('click', () => {
+      $('#flipbook').turn('page', 1);
     });
 
     // ✅ Fonction Partager
